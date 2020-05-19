@@ -1,13 +1,5 @@
-import json
-#import tweepy
-from kafka import KafkaProducer
-from kafka.errors import KafkaError
+import time
 
-producer = KafkaProducer(bootstrap_servers=['broker1:1234'])
-
-# Asynchronous by default
-future = producer.send('my-topic', b'raw_bytes')
-
-# produce json messages
-#producer = KafkaProducer(value_serializer=lambda m: json.dumps(m).encode('ascii'))
-#producer.send('json-topic', {'key': 'value'})
+while 1 > 0:
+  print("I'll write to kafka.... some day")
+  time.sleep(2)
