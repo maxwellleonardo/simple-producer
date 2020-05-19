@@ -1,36 +1,13 @@
 import json
 #import tweepy
+from kafka import KafkaProducer
+from kafka.errors import KafkaError
 
+producer = KafkaProducer(bootstrap_servers=['broker1:1234'])
 
-import boto3
+# Asynchronous by default
+future = producer.send('my-topic', b'raw_bytes')
 
-# Create SQS client
-sqs = boto3.client('sqs',region_name='us-east-1' )
-
-queue_url = 'https://sqs.us-east-1.amazonaws.com/576962245852/simple-queue1' 
-
-# Send message to SQS queue
-response = sqs.send_message(
-    QueueUrl=queue_url,
-    DelaySeconds=10,
-    MessageAttributes={
-        'Title': {
-            'DataType': 'String',
-            'StringValue': 'The Whistler'
-        },
-        'Author': {
-            'DataType': 'String',
-            'StringValue': 'John Grisham'
-        },
-        'WeeksOn': {
-            'DataType': 'Number',
-            'StringValue': '6'
-        }
-    },
-    MessageBody=(
-        'Information about current NY Times fiction bestseller for '
-        'week of 12/11/2016.'
-    )
-)
-
-print(response['MessageId'])
+# produce json messages
+#producer = KafkaProducer(value_serializer=lambda m: json.dumps(m).encode('ascii'))
+#producer.send('json-topic', {'key': 'value'})

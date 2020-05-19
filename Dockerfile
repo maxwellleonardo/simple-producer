@@ -4,8 +4,7 @@ RUN mkdir /app
 FROM base as app
 
 WORKDIR /app
-RUN pip3 install tweepy boto3
-
+RUN pip3 install tweepy kafka-python
 
 COPY . . 
 CMD [ "python", "./simple.py" ]
